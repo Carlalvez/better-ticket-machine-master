@@ -101,14 +101,23 @@ public class TicketMachine
     }
    
     /**
-     Añade a la clase TicketMachine del proyecto better-ticket-machine un método llamado emptyMachine
+     Modifica el primer método de esta actividad para que solo vacíe la maquina en caso de que no haya ninguna operación en curso
      */
     public int emptyMachine()
     {
+       int status;
+        status = 0;
+        if (balance == 0){
         int amountToCollect;
-        amountToCollect = total + balance;
+        amountToCollect = total;
+        status = amountToCollect;
         total = 0;
-        balance = 0;
-        return amountToCollect;
+    }
+        else {
+            status = -1;
+            System.out.println("Hay una operación en curso.");
+            System.out.println("Por favor, inténtelo más tarde.");
+        }
+        return status;
     }
 }
