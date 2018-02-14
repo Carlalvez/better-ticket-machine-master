@@ -99,4 +99,16 @@ public class TicketMachine
         balance = 0;
         return amountToRefund;
     }
+   
+    /**
+     Añade a la clase TicketMachine del proyecto better-ticket-machine un método llamado emptyMachine
+     */
+    public int emptyMachine()
+    {
+        int amountToCollect;
+        amountToCollect = total + balance;
+        total = 0;
+        balance = 0;
+        return amountToCollect;
+    }
 }
