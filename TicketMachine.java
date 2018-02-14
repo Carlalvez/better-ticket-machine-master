@@ -19,13 +19,18 @@ public class TicketMachine
     private int total;
     // indicar por parámetro si está maquina va a ser una máquina de tipo normal o va a ser una máquina de tipo que venda billetes con premio. (TRUE = prizeMachine)
     private boolean prizeMachine;
-
+    // Sets the maximum number of tickets that can be sold
+    private int maxTicketsToSell;
+    // The total of tickets sold.
+    private int ticketsSold;
     /**
      * Create a machine that issues tickets of the given price.
      */
-    public TicketMachine(int cost, boolean setMachineType)
+    public TicketMachine(int cost, boolean trueForPrizeMachineFalseToNormal, int ticketsToSell)
     {
-        prizeMachine = setMachineType;
+        //True, Prize Machine.
+        prizeMachine = trueForPrizeMachineFalseToNormal; 
+        maxTicketsToSell = ticketsToSell;
         price = cost;
         balance = 0;
         total = 0;
@@ -49,12 +54,18 @@ public class TicketMachine
     }
 
     /**
-     * Receive an amount of money from a customer.
-     * Check that the amount is sensible.
-     */
+    * Receive an amount of money from a customer.
+    * Check that the amount is sensible.
+    * Si no hay ticket, no recibe cantidad y sout mensaje en pantalla.
+    * Si ingresas suficiente dinero, compras ticket  
+    */
     public void insertMoney(int amount)
     {
-        if(amount > 0) {
+        if (ticketsSold >= maxTicketsToSell){ 
+            System.out.println("Stock Out");
+            System.out.println("try again in another machine");    
+        }
+        else if(amount > 0) {
             balance = balance + amount;
         }
         else {
@@ -106,6 +117,8 @@ public class TicketMachine
                 total = total + price;
                 // Reduce the balance by the prince.
                 balance = balance - price;
+                 // Add 1 to the total of Tickets sold.
+                ticketsSold += 1;
             }
         }
         else {
@@ -131,8 +144,8 @@ public class TicketMachine
      Modifica el primer método de esta actividad para que solo vacíe la maquina en caso de que no haya ninguna operación en curso
      */
     public int emptyMachine()
-    {  int amountToCollect = -1;
-    if (balance != 0){
+        {  int amountToCollect = -1;
+            if (balance != 0){
            System.out.println("Hay una operación en curso.");
            System.out.println("Por favor, inténtelo más tarde.");
            amountToCollect = -1;
@@ -140,5 +153,5 @@ public class TicketMachine
              amountToCollect = total;
              total = 0;
          }
-    return amountToCollect;}
+         return amountToCollect;}
     }
